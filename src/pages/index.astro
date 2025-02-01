@@ -9,6 +9,7 @@ import Card from "@components/Card";
 import Socials from "@components/Socials.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 import { SITE, SOCIALS } from "@config";
+import { slugifyStr } from "@utils/slugify";
 
 const posts = await getCollection("blog");
 
@@ -75,9 +76,9 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           <section id="featured">
             <h2>Featured</h2>
             <ul>
-              {featuredPosts.map(({ data, slug }) => (
+              {featuredPosts.map(({ data }) => (
                 <Card
-                  href={`/posts/${slug}/`}
+                  href={`/posts/${slugifyStr(data.title)}/`}
                   frontmatter={data}
                   secHeading={false}
                 />
@@ -95,10 +96,10 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           <h2>Recent Posts</h2>
           <ul>
             {recentPosts.map(
-              ({ data, slug }, index) =>
+              ({ data }, index) =>
                 index < SITE.postPerIndex && (
                   <Card
-                    href={`/posts/${slug}/`}
+                    href={`/posts/${slugifyStr(data.title)}/`}
                     frontmatter={data}
                     secHeading={false}
                   />

@@ -2,6 +2,7 @@ import Fuse from "fuse.js";
 import { useEffect, useRef, useState, useMemo, type FormEvent } from "react";
 import Card from "@components/Card";
 import type { CollectionEntry } from "astro:content";
+import { slugifyStr } from "@utils/slugify";
 
 export type SearchItem = {
   title: string;
@@ -116,9 +117,9 @@ export default function SearchBar({ searchList }: Props) {
         {searchResults &&
           searchResults.map(({ item, refIndex }) => (
             <Card
-              href={`/posts/${item.slug}/`}
+              href={`/posts/${slugifyStr(item.data.title)}/`}
               frontmatter={item.data}
-              key={`${refIndex}-${item.slug}`}
+              key={`${refIndex}-${slugifyStr(item.data.title)}`}
             />
           ))}
       </ul>
